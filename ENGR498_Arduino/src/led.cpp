@@ -8,10 +8,15 @@ void initLED() {
     DDRD |= (1 << PORTD0) | (1 << PORTD1) | (1 << PORTD2);
 }
 
-
-// TODO: CHANGE "turnOnLEDWithChar" (ONLY ONE LIGHT NEEDED AT A TIME)
-
-// given binary representation "num" the lowest four bits of num will be assigned to the appropriate bits of PORTD (LED ports)
-void turnOnLEDWithChar(unsigned char num) {
-    PORTD = (PORTD & 0xF0) | (num & 0x0F);
+void turnOnLEDWithChar(unsigned char pattern) {
+    // Pattern is 3 bits representing the LEDs ("100", "010", "001")
+    if (pattern == 0b100) { // GREEN
+        PORTD = (PORTD & 0xF8) | 0x01;
+    } else if (pattern == 0b010) { // YELLOW
+        PORTD = (PORTD & 0xF8) | 0x02;
+    } else if (pattern == 0b001) { // RED
+        PORTD = (PORTD & 0xF8) | 0x04;
+    } else { // Invalid pattern, turn off all LEDs
+        PORTD &= 0xF8;
+    }
 }

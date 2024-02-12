@@ -2,6 +2,8 @@
 #define PWM_H
 
 void initPWMTimer3();
-void changeDutyCycle(unsigned int combo);
+void initPWMTimerSpeed();
+void changeDutyCycle3(unsigned int combo);
+void changeDutyCycleSpeed(unsigned int combo);
 
 #endif

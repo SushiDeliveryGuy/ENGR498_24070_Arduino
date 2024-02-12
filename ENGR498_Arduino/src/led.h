@@ -2,6 +2,6 @@
 #define LED_H
 
 void initLED();
-void turnOnLEDWithChar(unsigned char num);
+void turnOnLEDWithChar(unsigned char pattern);
 
 #endif

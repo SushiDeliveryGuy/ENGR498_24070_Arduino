@@ -1,6 +1,6 @@
 #ifndef ADC_H
 #define ADC_H
 
-void initADC();
+void initADC_A0();
 
 #endif

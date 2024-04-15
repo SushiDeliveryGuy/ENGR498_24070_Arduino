@@ -1,28 +1,58 @@
-int RPWM_Output = 5; // Arduino PWM output pin 5; connect to IBT-2 pin 1 (RPWM)
-int LPWM_Output = 6; // Arduino PWM output pin 6; connect to IBT-2 pin 2 (LPWM)
-void setup()
-{
- pinMode(RPWM_Output, OUTPUT);
- pinMode(LPWM_Output, OUTPUT);
+/*
+WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
+  1. Make sure only rotary encoder and motor/motor power components are connected
+  2. All other mains() or setup()/loop() pairs are disabled
+  3. "Kill-switch" is readily available during tests
+*/
+#include <Arduino.h>
+#include <avr/io.h>
+#include "switch.h"
+#include "timer.h"
+#include "pwm.h"
+#include "led.h"
+#include "adc.h"
+
+const int RPWM_Output = 10; // Arduino PWM output pin 5; connect to IBT-2 pin 1 (RPWM)
+const int LPWM_Output = 9; // Arduino PWM output pin 6; connect to IBT-2 pin 2 (LPWM)
+
+const int ROT_A = 18; // Arduino Pin 18
+const int ROT_B = 19; // Arduino Pin 19
+
+volatile int ROT_VAL;
+
+// initalizes interrupt handlers for rotary encoder
+void ai3() {
+  if (digitalRead(ROT_B) == LOW) {
+    ROT_VAL--;
+  } else {
+    ROT_VAL++;
+  }
 }
-void loop()
-{
- int sensorValue = analogRead(SENSOR_PIN);
- // sensor value is in the range 0 to 1023
- // the lower half of it we use for reverse rotation; the upper half for forward
-rotation
- if (sensorValue < 512)
- {
- // reverse rotation
- int reversePWM = -(sensorValue - 511) / 2;
- analogWrite(LPWM_Output, 0);
- analogWrite(RPWM_Output, reversePWM);
- }
- else
- {
- // forward rotation
- int forwardPWM = (sensorValue - 512) / 2;
- analogWrite(LPWM_Output, forwardPWM);
- analogWrite(RPWM_Output, 0);
- }
+
+void setup() {
+    pinMode(RPWM_Output, OUTPUT);
+    pinMode(LPWM_Output, OUTPUT);
+
+    // sets rotary encoder pins as pull-up inputs
+    pinMode(ROT_A, INPUT_PULLUP);
+    // Set interrupt trigger for rising edge
+    EICRA |= (1 << ISC31) | (1 << ISC30); // Rising edge trigger for INT3
+    // Enable INT3 in the external interrupt mask register
+    EIMSK |= (1 << INT3);
+
+    sei(); // enables global interrupts
+    attachInterrupt(ROT_A, ai3, CHANGE);
+}
+
+void loop() {
+    if (ROT_VAL < 100) {
+        // forward rotation
+        analogWrite(LPWM_Output, 120);
+        analogWrite(RPWM_Output, 0);
+    }
+    if (ROT_VAL > 1300) {
+        // reverse rotation
+        analogWrite(LPWM_Output, 0);
+        analogWrite(RPWM_Output, 120);
+    }
 }

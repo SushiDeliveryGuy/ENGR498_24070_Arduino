@@ -1,5 +1,4 @@
 #include "timer.h"
-#include <avr/io.h>
 
 /* Initialize timer 1, you should not turn the timer on here. Use CTC mode  .*/
 void initTimer1(){

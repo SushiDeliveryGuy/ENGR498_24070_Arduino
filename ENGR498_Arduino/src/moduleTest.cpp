@@ -18,7 +18,8 @@ const int LPWM_Output = 9; // Arduino PWM output pin 6; connect to IBT-2 pin 2 (
 const int ROT_A = 18; // Arduino Pin 18
 const int ROT_B = 19; // Arduino Pin 19
 
-volatile int ROT_VAL;
+volatile int temp = 1;
+volatile int ROT_VAL = 0;
 
 // initalizes interrupt handlers for rotary encoder
 void ai3() {
@@ -35,24 +36,40 @@ void setup() {
 
     // sets rotary encoder pins as pull-up inputs
     pinMode(ROT_A, INPUT_PULLUP);
+    pinMode(ROT_B, INPUT_PULLUP);
+
     // Set interrupt trigger for rising edge
     EICRA |= (1 << ISC31) | (1 << ISC30); // Rising edge trigger for INT3
     // Enable INT3 in the external interrupt mask register
     EIMSK |= (1 << INT3);
 
     sei(); // enables global interrupts
-    attachInterrupt(ROT_A, ai3, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ROT_A), ai3, RISING);
+
+    Serial.begin(9600);
 }
 
 void loop() {
-    if (ROT_VAL < 100) {
-        // forward rotation
-        analogWrite(LPWM_Output, 120);
-        analogWrite(RPWM_Output, 0);
-    }
-    if (ROT_VAL > 1300) {
-        // reverse rotation
+    // forward rotation
+    if (ROT_VAL < 5) { // THRESHOLD 
+        // if (LPWM_Output == 100) {
+        //   for (int i = 100; i > 10; i = i - 10) {
+        //     analogWrite(LPWM_Output, i);
+        //     delayMs0(100);
+        //   }
+        // }
         analogWrite(LPWM_Output, 0);
-        analogWrite(RPWM_Output, 120);
+        analogWrite(RPWM_Output, 70);
+    }
+    // reverse rotation
+    if (ROT_VAL > 400) { // THRESHOLD 50
+        // if (RPWM_Output == 100) {
+        //   for (int i = 100; i > 10; i = i - 10) {
+        //     analogWrite(RPWM_Output, i);
+        //     delayMs0(100);
+        //   }
+        // }
+        analogWrite(LPWM_Output, 70);
+        analogWrite(RPWM_Output, 0);
     }
 }

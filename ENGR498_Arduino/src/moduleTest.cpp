@@ -9,6 +9,8 @@ WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
 #include "timer.h"
 #include "led.h"
 
+//--------- TEST 1: Single Dial-------------//
+
 // // void setup() {
 // //     Serial.begin(9600);
 // // }
@@ -17,10 +19,9 @@ WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
 // //     Serial.println(value);
 // // }
 
-
+//--------- TEST 2: Single Button-------------//
 
 // // const int BUTTON_PIN = PD1;
-
 
 // // void setup() {
 // //   Serial.begin(9600);
@@ -42,8 +43,7 @@ WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
 // //   }
 // // }
 
-
-
+//--------- TEST 3: Rotary Encoder Value Counting and Motor Switch Directions-------------//
 
 const int RPWM_Output = 10; // Arduino PWM output pin 5; connect to IBT-2 pin 1 (RPWM)
 const int LPWM_Output = 9; // Arduino PWM output pin 6; connect to IBT-2 pin 2 (LPWM)

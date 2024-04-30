@@ -1,16 +1,49 @@
-/*
-WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
-  1. Make sure only rotary encoder and motor/motor power components are connected
-  2. All other mains() or setup()/loop() pairs are disabled
-  3. "Kill-switch" is readily available during tests
-*/
+// // /*
+// // WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
+// //   1. Make sure only rotary encoder and motor/motor power components are connected
+// //   2. All other mains() or setup()/loop() pairs are disabled
+// //   3. "Kill-switch" is readily available during tests
+// // */
 #include <Arduino.h>
 #include <avr/io.h>
-#include "switch.h"
 #include "timer.h"
-#include "pwm.h"
 #include "led.h"
-#include "adc.h"
+
+// // void setup() {
+// //     Serial.begin(9600);
+// // }
+// // void loop() {
+// //     int value = analogRead(A2);
+// //     Serial.println(value);
+// // }
+
+
+
+// // const int BUTTON_PIN = PD1;
+
+
+// // void setup() {
+// //   Serial.begin(9600);
+// //   pinMode(BUTTON_PIN, INPUT_PULLUP);
+// // }
+
+// // void loop() {
+// //   // Read the state of the button
+// //   int buttonState = digitalRead(BUTTON_PIN);
+
+// //   // Check if the button is pressed (active LOW)
+// //   if (buttonState == LOW) {
+// //     Serial.println("Button pressed");
+// //     // Wait for the button to be released before printing again
+// //     while (digitalRead(BUTTON_PIN) == LOW) {
+// //       // Do nothing, just wait for the button to be released
+// //     }
+// //     Serial.println("Button released");
+// //   }
+// // }
+
+
+
 
 const int RPWM_Output = 10; // Arduino PWM output pin 5; connect to IBT-2 pin 1 (RPWM)
 const int LPWM_Output = 9; // Arduino PWM output pin 6; connect to IBT-2 pin 2 (LPWM)
@@ -50,6 +83,7 @@ void setup() {
 }
 
 void loop() {
+    Serial.println("POWER");
     // forward rotation
     if (ROT_VAL < 5) { // THRESHOLD 
         // if (LPWM_Output == 100) {

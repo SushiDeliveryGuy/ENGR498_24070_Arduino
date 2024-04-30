@@ -7,7 +7,7 @@
   Declares states from state machine:
     idle - waiting at base
     sample - moving/taking sample
-    // e_stop - return to base and stay auntil wait state left
+    // e_stop - return to base and stay until wait state left
     wait - post e_stop idle state
 */
 typedef enum {idle, sample, e_stop, wait} states;
@@ -215,7 +215,7 @@ ISR(INT1_vect) {
     }
 }
 
-// initalizes interrupt handlers for rotary encoder
+// initalize interrupt handlers for rotary encoder
 ISR(INT3_vect) {
   if (digitalRead(ROT_B) == LOW) {
     ROT_VAL--;

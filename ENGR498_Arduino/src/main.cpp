@@ -79,8 +79,7 @@ initLED();
   EICRA |= (1 << ISC31) | (1 << ISC30); // Rising edge trigger for INT3
   // Enable INT3 in the external interrupt mask register
   EIMSK |= (1 << INT3);
-
-
+  
   sei(); // enables global interrupts
 
   // Emergency State Boolean check initialization

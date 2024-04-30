@@ -1,9 +1,9 @@
-// // /*
-// // WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
-// //   1. Make sure only rotary encoder and motor/motor power components are connected
-// //   2. All other mains() or setup()/loop() pairs are disabled
-// //   3. "Kill-switch" is readily available during tests
-// // */
+/*
+WHEN TESTING "moduleTest.cpp" DO THE FOLLOWING:
+  1. Make sure only rotary encoder and motor/motor power components are connected
+  2. All other mains() or setup()/loop() pairs are disabled
+  3. "Kill-switch" is readily available during tests
+*/
 #include <Arduino.h>
 #include <avr/io.h>
 #include "timer.h"
